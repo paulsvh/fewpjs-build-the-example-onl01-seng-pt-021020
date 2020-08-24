@@ -8,12 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
   errorModal.hidden = true;
 });
 
+function hideMyModal(){
+  errorModal.hidden = true
+};
+
+function showMyModal(){
+  errorModal.hidden = false
+};
+
 let heartLists = document.querySelectorAll(".like");
 
 function liker(e){
   let heart = e.target;
-  mimicServerCall("bogusUrl", {forceFailure: true})
-  .then(function(serverMessage){
+  mimicServerCall()
+  .then(function(){
     if (heart.innerText === EMPTY_HEART) {
       heart.innerText = FULL_HEART;
       heart.style.color = "red";
@@ -24,8 +32,10 @@ function liker(e){
     }
   })
   .catch(function(error){
-    setTimeout(function(){ errorModal.hidden = false }, 5000)});
-};
+    showMyModal();
+    setTimeout(hideMyModal, 5000);
+})};
+
 
 let heartGlyph = document.getElementsByClassName("like-glyph");
 for (let i = 0; i < heartGlyph.length; i++){ 
